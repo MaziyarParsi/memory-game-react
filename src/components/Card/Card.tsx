@@ -1,21 +1,28 @@
-import { FC } from "react"
+import { FC } from "react";
 
+type TProps = {
+  card: {
+    id: number;
+    src: string;
+    matched: boolean;
+  };
+  handleBackClick: (card: { id: number; src: string }) => void;
+  flipped:boolean
+};
 
-type TProps={
-    id:number,
-    src:string
-    handleClick : (id:number)=>void
-}
-
-const Card:FC<TProps> = ({id,src,handleClick}) => {
+const Card: FC<TProps> = ({ card, handleBackClick,flipped }) => {
   return (
-    <div key={id} className="cursor-pointer" onClick={()=>handleClick(id)}>
-    <div>
-      <img src={src} alt="front-image" />
-      <img src={"/img/cover.png"} alt="cover-image" />
+    <div className="cursor-pointer">
+      {flipped && <img src={card.src} alt="front-image" />}
+      {!flipped && (
+        <img
+          src={"/img/cover.png"}
+          alt="cover-image"
+          onClick={() => handleBackClick(card)}
+        />
+      )}
     </div>
-  </div>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;

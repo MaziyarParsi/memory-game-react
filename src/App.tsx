@@ -1,22 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { Button, Card } from "./components";
 
 const cardImages = [
-  { src: "/img/helmet-1.png" },
-  { src: "/img/potion-1.png" },
-  { src: "/img/ring-1.png" },
-  { src: "/img/scroll-1.png" },
-  { src: "/img/shield-1.png" },
-  { src: "/img/sword-1.png" },
+  { src: "/img/helmet-1.png",matched:false },
+  { src: "/img/potion-1.png" ,matched:false},
+  { src: "/img/ring-1.png" ,matched:false},
+  { src: "/img/scroll-1.png" ,matched:false},
+  { src: "/img/shield-1.png",matched:false },
+  { src: "/img/sword-1.png",matched:false },
 ];
+
+type TCard = {
+  id: number;
+  src: string;
+  matched:boolean
+};
 
 function App() {
   const repeatCardInGame = 2;
 
-  const [finalCards, setFinalCards] = useState<{ id: number; src: string }[]>(
-    []
-  );
+  const [finalCards, setFinalCards] = useState<TCard[]>([]);
+  const [turns, setTurns] = useState(0);
+  const [choiceOne, setChoinceOne] = useState<TCard | null>(null);
+  const [choiceTwo, setChoinceTwo] = useState<TCard | null>(null);
+
   // create cards based on duplicate value we want
   function createCardsList() {
     let newUnorderedCards = cardImages;
@@ -49,12 +57,41 @@ function App() {
   function handleClick() {
     const unOrderedCards = createCardsList();
     const finalList = shuffleCards(unOrderedCards);
+    // @ts-expect-error chec type
     setFinalCards(finalList);
+    setTurns(0);
   }
 
-  function handleCardClick (id:number){
-    console.log("card",id)
+  function handleBackClick(card: TCard) {
+    !choiceOne ? setChoinceOne(card) : setChoinceTwo(card);
   }
+
+  function resetTurn() {
+    setChoinceOne(null);
+    setChoinceTwo(null);
+    setTurns((prev) => prev + 1);
+  }
+
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      if (choiceOne.src === choiceTwo.src) {
+        console.log("mathcer",finalCards);
+        setFinalCards((prev)=>prev.map((card)=>{
+          if(card.src===choiceOne.src){
+            return {...card,matched:true}
+          }else{
+            return card
+          }
+        }))
+      } else {
+        console.log("not matched");
+      }
+      setTimeout(()=>resetTurn(),1000)
+     
+    }
+  }, [choiceOne, choiceTwo]);
+
+  console.log("finalcard",finalCards)
   
 
   return (
@@ -66,7 +103,12 @@ function App() {
 
       <div className="grid mt-4 grid-cols-6 gap-9">
         {finalCards.map((card) => (
-         <Card key={card.id} id={card.id} src={card.src} handleClick={()=>handleCardClick(card.id)}/>
+          <Card
+            key={card.id}
+            card={card}
+            handleBackClick={() => handleBackClick(card)}
+            flipped={card.id===choiceOne?.id|| card.id===choiceTwo?.id || card.matched}
+          />
         ))}
       </div>
     </div>
