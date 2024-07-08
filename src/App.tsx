@@ -102,8 +102,8 @@ function App() {
 
   return (
     <div className="bg-primary text-white min-h-screen h-fit w-full flex flex-col justify-center items-center py-8">
-      <div>
-        <h1 className="font-bold text-xl"> simple memory card</h1>
+      <div className="flex flex-col items-center">
+        <h1 className="font-bold text-3xl mb-4">Card Match!</h1>
         <Button onClick={handleClick}>Start game</Button>
       </div>
 
