@@ -32,6 +32,23 @@ p, h1, h2, h3, h4, h5, h6 {
 #root, #__next {
   isolation: isolate;
 }
+.front{
+  transform: rotateY(90deg);
+  transition: all ease-in-out 0.2;
+  position: absolute;
+}
+.flipped-front{
+  transform: rotateY(0deg);
+  transition-delay: 0.2s;
+}
+.back{
+  transition: all ease-in-out 0.2s;
+  transition-delay: 0.2s;
+}
+.flipped-back{
+  transform: rotateY(90deg);
+  transition-delay: 0s;
+}
 
 
 @tailwind base;

@@ -117,6 +117,9 @@ function App() {
           />
         ))}
       </div>
+      <div className="mt-4">
+        <p>Turns: {turns}</p>
+      </div>
     </div>
   );
 }

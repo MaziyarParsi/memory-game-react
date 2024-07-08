@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { FC } from "react";
 
 type TProps = {
@@ -12,23 +13,26 @@ type TProps = {
 
 const Card: FC<TProps> = ({ card, handleBackClick, flipped }) => {
   return (
-    <div className="cursor-pointer rounded-md border-2 border-white relative transition-all">
+    <div className="cursor-pointer rounded-md border-2 border-white relative ">
       <div className={flipped ? "" : ""}>
-        {flipped && (
-          <img
-            src={card.src}
-            alt="front-image"
-            className=" rounded-md transition delay-150 w-full"
-          />
-        )}
-        {!flipped && (
-          <img
-            src={"/img/cover.png"}
-            alt="cover-image"
-            onClick={() => handleBackClick(card)}
-            className=" rounded-md transition delay-150 w-full"
-          />
-        )}
+        <img
+          src={card.src}
+          alt="front-image"
+          className={clsx(
+            "rounded-md front",
+            flipped && "flipped-front",
+          )}
+        />
+
+        <img
+          src={"/img/cover.png"}
+          alt="cover-image"
+          onClick={() => handleBackClick(card)}
+          className={clsx(
+            "rounded-md back w-full rotate",
+            flipped && "flipped-back",
+          )}
+        />
       </div>
     </div>
   );
