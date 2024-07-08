@@ -68,7 +68,7 @@ function App() {
       !choiceOne ? setChoinceOne(card) : setChoinceTwo(card);
     }
   }
-  console.log("disabled,",disabled)
+
 
   function resetTurn() {
     setChoinceOne(null);
@@ -98,7 +98,6 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
-  console.log("finalcard",finalCards)
   
 
   return (
