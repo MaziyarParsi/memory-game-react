@@ -6,7 +6,7 @@ type TProps = {
 
 const Button: FC<TProps> = ({ children }) => {
   return (
-    <div className="hover:bg-btnHover w-52 bg-blue-300 border border-solid  border-white py-2 px-3 rounded-md text-white cursor-pointer">
+    <div className="hover:bg-btnHover w-52 bg-blue-500 border border-solid  border-white py-2 px-3 rounded-md text-white cursor-pointer text-center">
       {children}
     </div>
   );
