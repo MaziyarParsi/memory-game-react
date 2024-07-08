@@ -56,6 +56,8 @@ function App() {
   }
 
   function handleClick() {
+    setChoinceOne(null);
+    setChoinceTwo(null);
     const unOrderedCards = createCardsList();
     const finalList = shuffleCards(unOrderedCards);
     // @ts-expect-error chec type
