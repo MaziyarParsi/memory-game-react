@@ -24,6 +24,7 @@ function App() {
   const [turns, setTurns] = useState(0);
   const [choiceOne, setChoinceOne] = useState<TCard | null>(null);
   const [choiceTwo, setChoinceTwo] = useState<TCard | null>(null);
+  const[disabled,setDisabled]=useState(false)
 
   // create cards based on duplicate value we want
   function createCardsList() {
@@ -63,17 +64,23 @@ function App() {
   }
 
   function handleBackClick(card: TCard) {
-    !choiceOne ? setChoinceOne(card) : setChoinceTwo(card);
+    if(!disabled){
+      !choiceOne ? setChoinceOne(card) : setChoinceTwo(card);
+    }
   }
+  console.log("disabled,",disabled)
 
   function resetTurn() {
     setChoinceOne(null);
     setChoinceTwo(null);
     setTurns((prev) => prev + 1);
+    setDisabled(false)
   }
 
   useEffect(() => {
+    
     if (choiceOne && choiceTwo) {
+      setDisabled(true)
       if (choiceOne.src === choiceTwo.src) {
         console.log("mathcer",finalCards);
         setFinalCards((prev)=>prev.map((card)=>{
@@ -101,7 +108,7 @@ function App() {
         <Button onClick={handleClick}>Start game</Button>
       </div>
 
-      <div className="grid mt-4 grid-cols-6 gap-9">
+      <div className="grid mt-4 grid-cols-6 gap-4">
         {finalCards.map((card) => (
           <Card
             key={card.id}
